@@ -1,0 +1,382 @@
+//..........................Remote+Motion Mark II............................//
+#include <Servo.h> //setup untuk motor servo
+Servo myservo;
+int nilaiservo=90;
+int tombolservo=0;
+int servomajustatus=0;
+
+
+unsigned long durasi;//setup untuk IR reciver
+int bits[32], x=0;
+
+int tombolkecerahan=0;//setup untuk lampu
+int kecerahan=0;
+
+#include <NewPing.h>//setup untuk ping + motion
+#define TRIGGER_PIN  12  
+#define ECHO_PIN     11  
+#define MAX_DISTANCE 200 
+#define TRIGGER_PIN1  7 
+#define ECHO_PIN1     6
+#define MAX_DISTANCE1 200
+NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE); 
+NewPing sonar1(TRIGGER_PIN1, ECHO_PIN1, MAX_DISTANCE1); 
+int buttonstateKiriTelaah=0;
+int buttonstateKananTelaah=0;
+int motionstatus=0;
+
+void setup() {
+  pinMode(2, INPUT);
+  pinMode(3, INPUT_PULLUP);
+  Serial.begin(9600);
+  myservo.attach(13);
+}
+
+void loop() {
+  //myservo.write(nilaiservo);
+  analogWrite(5, kecerahan);
+  durasi = pulseIn(2, HIGH);
+  waktu2logika();
+  Serial.println(durasi);
+    if (x==22){
+      terjemahkan();
+      aturkecerahan();
+      //aturposisiservo();
+      //Serial.println(kecerahan);
+    }
+ }
+///////////////////////////////////////////////////////////////////
+void waktu2logika() {
+   if(durasi > 4000 && durasi <5500) {//durasi start 
+    durasi=2;
+    bits[x] = durasi; 
+    x++;
+  }
+  
+  if(durasi >1500 && durasi <2700) {//durasi data 1 
+    durasi=1; 
+    bits[x] = durasi; 
+    x++;
+  }
+  
+  if(durasi>400&&durasi<1500) {//durasi data 0
+    durasi = 0;
+    bits[x] = durasi; 
+    x++;
+  }
+    if(durasi>39000) {//durasi stop pertama
+    durasi = 3;
+    x=0;
+  }
+   if(durasi>2000&&durasi<2300) {//durasi stop kedua
+    durasi = 4;
+  }
+}
+///////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+void terjemahkan() {
+  if(bits[0] == 2 &&
+     bits[1] == 0 &&
+     bits[2] == 1 &&
+     bits[3] == 0 &&
+     bits[4] == 0 &&
+     bits[5] == 0 &&
+     bits[6] == 0 &&
+     bits[7] == 0 &&
+     bits[8] == 0 &&
+     bits[9] == 1 &&
+     bits[10] == 0 &&
+     bits[11] == 1 &&
+     bits[12] == 1 &&
+     bits[13] == 1 &&
+     bits[14] == 1 &&
+     bits[15] == 0 &&
+     bits[16] == 1 &&
+     bits[17] == 0 &&
+     bits[18] == 0 &&
+     bits[19] == 1 &&
+     bits[20] == 0 &&
+     bits[21] == 1 &&
+     bits[22] == 0 &&
+     bits[23] == 0 &&
+     bits[24] == 0 &&
+     bits[25] == 1 &&
+     bits[26] == 1 &&
+     bits[27] == 0 &&
+     bits[28] == 1 &&
+     bits[29] == 0 &&
+     bits[30] == 1 &&
+     bits[31] == 1)
+     {
+     //Serial.println("POWER OFF");
+     motionstatus=0;
+     tombolkecerahan=0;
+     myservo.write(90);
+  }
+  
+   if(bits[0] == 2 &&
+     bits[1] == 0 &&
+     bits[2] == 1 &&
+     bits[3] == 0 &&
+     bits[4] == 0 &&
+     bits[5] == 0 &&
+     bits[6] == 0 &&
+     bits[7] == 0 &&
+     bits[8] == 0 &&
+     bits[9] == 1 &&
+     bits[10] == 0 &&
+     bits[11] == 1 &&
+     bits[12] == 1 &&
+     bits[13] == 1 &&
+     bits[14] == 1 &&
+     bits[15] == 0 &&
+     bits[16] == 1 &&
+     bits[17] == 0 &&
+     bits[18] == 1 &&
+     bits[19] == 0 &&
+     bits[20] == 0 &&
+     bits[21] == 1 &&
+     bits[22] == 0 &&
+     bits[23] == 0 &&
+     bits[24] == 0 &&
+     bits[25] == 1 &&
+     bits[26] == 0 &&
+     bits[27] == 1 &&
+     bits[28] == 1 &&
+     bits[29] == 0 &&
+     bits[30] == 1 &&
+     bits[31] == 1)
+     {
+     //Serial.println("CH+");
+     motionstatus=0;
+     myservo.write(0);
+     delay(50);
+     myservo.write(90);
+     //myservo.write(0);
+   }
+    if(bits[0] == 2 &&
+     bits[1] == 0 &&
+     bits[2] == 1 &&
+     bits[3] == 0 &&
+     bits[4] == 0 &&
+     bits[5] == 0 &&
+     bits[6] == 0 &&
+     bits[7] == 0 &&
+     bits[8] == 0 &&
+     bits[9] == 1 &&
+     bits[10] == 0 &&
+     bits[11] == 1 &&
+     bits[12] == 1 &&
+     bits[13] == 1 &&
+     bits[14] == 1 &&
+     bits[15] == 0 &&
+     bits[16] == 1 &&
+     bits[17] == 1 &&
+     bits[18] == 1 &&
+     bits[19] == 0 &&
+     bits[20] == 0 &&
+     bits[21] == 1 &&
+     bits[22] == 0 &&
+     bits[23] == 0 &&
+     bits[24] == 0 &&
+     bits[25] == 0 &&
+     bits[26] == 0 &&
+     bits[27] == 1 &&
+     bits[28] == 1 &&
+     bits[29] == 0 &&
+     bits[30] == 1 &&
+     bits[31] == 1)
+     
+   {
+     Serial.println("CH-");
+     motionstatus=0;
+     myservo.write(180);
+     delay(50);
+     myservo.write(90);
+   }
+  
+    if(bits[0] == 2 &&
+     bits[1] == 0 &&
+     bits[2] == 1 &&
+     bits[3] == 0 &&
+     bits[4] == 0 &&
+     bits[5] == 0 &&
+     bits[6] == 0 &&
+     bits[7] == 0 &&
+     bits[8] == 0 &&
+     bits[9] == 1 &&
+     bits[10] == 0 &&
+     bits[11] == 1 &&
+     bits[12] == 1 &&
+     bits[13] == 1 &&
+     bits[14] == 1 &&
+     bits[15] == 0 &&
+     bits[16] == 1 &&
+     bits[17] == 0 &&
+     bits[18] == 0 &&
+     bits[19] == 0 &&
+     bits[20] == 0 &&
+     bits[21] == 1 &&
+     bits[22] == 0 &&
+     bits[23] == 0 &&
+     bits[24] == 0 &&
+     bits[25] == 1 &&
+     bits[26] == 1 &&
+     bits[27] == 1 &&
+     bits[28] == 1 &&
+     bits[29] == 0 &&
+     bits[30] == 1 &&
+     bits[31] == 1)
+     {
+     Serial.println("VOL+");
+     motionstatus=0;
+     tombolkecerahan=2;
+     myservo.write(90);
+   }
+  
+    if(bits[0] == 2 &&
+     bits[1] == 0 &&
+     bits[2] == 1 &&
+     bits[3] == 0 &&
+     bits[4] == 0 &&
+     bits[5] == 0 &&
+     bits[6] == 0 &&
+     bits[7] == 0 &&
+     bits[8] == 0 &&
+     bits[9] == 1 &&
+     bits[10] == 0 &&
+     bits[11] == 1 &&
+     bits[12] == 1 &&
+     bits[13] == 1 &&
+     bits[14] == 1 &&
+     bits[15] == 0 &&
+     bits[16] == 1 &&
+     bits[17] == 1 &&
+     bits[18] == 0 &&
+     bits[19] == 0 &&
+     bits[20] == 0 &&
+     bits[21] == 1 &&
+     bits[22] == 0 &&
+     bits[23] == 0 &&
+     bits[24] == 0 &&
+     bits[25] == 0 &&
+     bits[26] == 1 &&
+     bits[27] == 1 &&
+     bits[28] == 1 &&
+     bits[29] == 0 &&
+     bits[30] == 1 &&
+     bits[31] == 1)
+     {
+     Serial.println("VOL-");
+     motionstatus=0;
+     tombolkecerahan=1;
+     myservo.write(90);
+  }
+  
+     if(bits[0] == 2 &&
+     bits[1] == 0 &&
+     bits[2] == 1 &&
+     bits[3] == 0 &&
+     bits[4] == 0 &&
+     bits[5] == 0 &&
+     bits[6] == 0 &&
+     bits[7] == 0 &&
+     bits[8] == 0 &&
+     bits[9] == 1 &&
+     bits[10] == 0 &&
+     bits[11] == 1 &&
+     bits[12] == 1 &&
+     bits[13] == 1 &&
+     bits[14] == 1 &&
+     bits[15] == 0 &&
+     bits[16] == 1 &&
+     bits[17] == 0 &&
+     bits[18] == 0 &&
+     bits[19] == 1 &&
+     bits[20] == 1 &&
+     bits[21] == 0 &&
+     bits[22] == 0 &&
+     bits[23] == 0 &&
+     bits[24] == 0 &&
+     bits[25] == 1 &&
+     bits[26] == 1 &&
+     bits[27] == 0 &&
+     bits[28] == 0 &&
+     bits[29] == 1 &&
+     bits[30] == 1 &&
+     bits[31] == 1)
+     {
+     Serial.println("Motion");
+     motionstatus=1;
+     motion();
+     myservo.write(90);
+  }
+}
+
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+void aturkecerahan(){
+  if (tombolkecerahan==2){
+  kecerahan=kecerahan+50;
+    if (kecerahan>255){kecerahan=255;}
+  }
+  else if(tombolkecerahan==1){
+  kecerahan=kecerahan-50;
+    if (kecerahan<0){kecerahan=0;}
+  }
+  else if(tombolkecerahan==0){
+    kecerahan=0;
+  }
+}
+
+///////////////////////////////////////////////////////////////////
+void motion() {
+  
+  //int tombol=digitalRead(3);
+  while (motion==1){ 
+  delay(50);                      // Wait 50ms between pings (about 20 pings/sec). 29ms should be the shortest delay between pings.
+  unsigned int uS = sonar.ping(); // Send ping, get ping time in microseconds (uS).
+  delay(50);
+  unsigned int uS1 = sonar1.ping(); // Send ping, get ping time in microseconds (uS).
+  //durasi = pulseIn(2, HIGH);
+  int tombol=digitalRead(3);
+  int buttonStatekiri =uS1 / US_ROUNDTRIP_CM;
+  int buttonStatekanan =uS / US_ROUNDTRIP_CM;
+  Serial.println(tombol);
+  analogWrite(5, kecerahan);
+  if(buttonstateKiriTelaah==0&&buttonstateKananTelaah==0)
+    {
+      if(buttonStatekiri>10&&buttonStatekiri<20)
+        {
+          buttonstateKiriTelaah=1;
+          delay(100);
+      }else if(buttonStatekanan>10&&buttonStatekanan<20){
+          buttonstateKananTelaah=1;
+          delay(100);
+      }
+      
+  }else if(buttonstateKiriTelaah==1){
+      if(buttonStatekanan>10&&buttonStatekanan<20){
+        buttonstateKananTelaah=0;
+        buttonstateKiriTelaah=0;
+        delay(500);
+      //Jika kiri dulu baru kanan
+        kecerahan=kecerahan+50; 
+        if(kecerahan>=250){kecerahan=250;}
+      }
+  }else if(buttonstateKananTelaah==1){
+      if(buttonStatekiri>10&&buttonStatekiri<20){
+        buttonstateKananTelaah=0;
+        buttonstateKiriTelaah=0; 
+        delay(500);
+        kecerahan=kecerahan-50;
+       //Jika kanan dulu baru kiri 
+       if(kecerahan<0){kecerahan=0;}
+      } 
+    }
+    //else if(tombol==0){kecerahan=255;}
+  }
+  
+sei();
+}
+
