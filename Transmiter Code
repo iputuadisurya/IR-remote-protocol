@@ -1,0 +1,501 @@
+        
+        
+    int IRledPin=13;
+    int pbvol_up=12;
+    int pbvol_down=11;
+    int pbch_up=10;
+    int pbch_down=9;
+    int pbpower=8;
+    int pbmute=7;
+    
+    // the setup routine runs once when you press reset:
+    void setup() {                
+      // initialize the digital pin as an output.
+      pinMode(IRledPin, OUTPUT); 
+      pinMode(12, INPUT_PULLUP);
+      pinMode(11, INPUT_PULLUP);
+      pinMode(10, INPUT_PULLUP);
+      pinMode(9, INPUT_PULLUP);
+      pinMode(8, INPUT_PULLUP);
+      pinMode(7, INPUT_PULLUP);
+    }
+    
+    // the loop routine runs over and over again forever:
+        
+        
+    void loop() {
+    int tombol_vol_up    = digitalRead(pbvol_up);
+    int tombol_vol_down  = digitalRead(pbvol_down);
+    int tombol_ch_up     = digitalRead(pbch_up);
+    int tombol_ch_down   = digitalRead(pbch_down);
+    int tombol_power     = digitalRead(pbpower);
+    int tombol_mute      = digitalRead(pbmute);
+    
+    
+         if(tombol_vol_up==LOW){
+            vol_up();
+            }
+    else if(tombol_vol_down==LOW){
+            vol_down();
+            }
+    else if(tombol_ch_up==LOW){
+            ch_up();
+            }
+    else if(tombol_ch_down==LOW){
+            ch_down();
+            }
+    else if(tombol_power==LOW){
+            power();
+            }
+    else if(tombol_mute==LOW){
+            mute();
+            }
+    else{
+          digitalWrite(IRledPin, LOW);}
+    }
+    
+    
+    
+    void pulseIR(long microsecs) {
+  // we'll count down from the number of microseconds we are told to wait
+
+  cli();  // this turns off any background interrupts
+
+  while (microsecs > 0) {
+    // 38 kHz is about 13 microseconds high and 13 microseconds low
+    digitalWrite(IRledPin, HIGH);  // this takes about 3 microseconds to happen
+    delayMicroseconds(10);         // hang out for 10 microseconds
+    digitalWrite(IRledPin, LOW);   // this also takes about 3 microseconds
+    delayMicroseconds(10);         // hang out for 10 microseconds
+
+    // so 26 microseconds altogether
+    microsecs -= 26;
+  }
+
+  sei();  // this turns them back on
+}
+  void vol_up(){
+        pulseIR(600);  
+        delayMicroseconds(5000);//0
+        pulseIR(600);
+        delayMicroseconds(600); //1
+        pulseIR(600);
+        delayMicroseconds(600);//2
+        pulseIR(1600);
+        delayMicroseconds(600); //3
+        pulseIR(600);
+        delayMicroseconds(600); //4
+        pulseIR(600);
+        delayMicroseconds(600);//5
+        pulseIR(600);
+        delayMicroseconds(600);//6
+        pulseIR(600);
+        delayMicroseconds(600);//7
+        pulseIR(600);
+        delayMicroseconds(600); //8
+        pulseIR(600);
+        delayMicroseconds(600); //9
+        pulseIR(1600);
+        delayMicroseconds(600); //10
+        pulseIR(600);
+        delayMicroseconds(600); //11
+        pulseIR(600);
+        delayMicroseconds(600); //12
+        pulseIR(600);
+        delayMicroseconds(600);//13
+        pulseIR(600);
+        delayMicroseconds(600);//14
+        pulseIR(600);
+        delayMicroseconds(600);//15 
+        pulseIR(1600);
+        delayMicroseconds(1600);//16
+        pulseIR(600);
+        delayMicroseconds(600);//17 
+        pulseIR(600);
+        delayMicroseconds(600);//18 
+        pulseIR(600);
+        delayMicroseconds(600);//19 
+        pulseIR(600);
+        delayMicroseconds(600);//20  
+        pulseIR(600);
+        delayMicroseconds(1800);//21
+        pulseIR(1600);
+        delayMicroseconds(600);//22
+        pulseIR(600);
+        delayMicroseconds(600);//24 
+        pulseIR(600);
+        delayMicroseconds(600); //24
+        pulseIR(600);
+        delayMicroseconds(1600);//25
+        pulseIR(600);
+        delayMicroseconds(1600);//26
+        pulseIR(600);
+        delayMicroseconds(1600);//27
+        pulseIR(600);
+        delayMicroseconds(1600);//28
+        pulseIR(600);
+        delayMicroseconds(600);//29
+        pulseIR(600);
+        delayMicroseconds(1600);//30
+        pulseIR(600);
+        delayMicroseconds(1600);//31
+        pulseIR(600);
+        delayMicroseconds(50000);
+        pulseIR(600);
+        delay(200);
+        }
+  void vol_down(){
+        pulseIR(600);  
+        delayMicroseconds(2000);//0
+        pulseIR(600);
+        delayMicroseconds(600); //1
+        pulseIR(600);
+        delayMicroseconds(1600);//2
+        pulseIR(1600);
+        delayMicroseconds(600); //3
+        pulseIR(600);
+        delayMicroseconds(600); //4
+        pulseIR(600);
+        delayMicroseconds(600);//5
+        pulseIR(600);
+        delayMicroseconds(600);//6
+        pulseIR(600);
+        delayMicroseconds(600);//7
+        pulseIR(600);
+        delayMicroseconds(600); //8
+        pulseIR(600);
+        delayMicroseconds(1600); //9
+        pulseIR(1600);
+        delayMicroseconds(600); //10
+        pulseIR(600);
+        delayMicroseconds(1600); //11
+        pulseIR(600);
+        delayMicroseconds(1600); //12
+        pulseIR(600);
+        delayMicroseconds(1600);//13
+        pulseIR(600);
+        delayMicroseconds(1600);//14
+        pulseIR(600);
+        delayMicroseconds(600);//15 
+        pulseIR(1600);
+        delayMicroseconds(1600);//16
+        pulseIR(600);
+        delayMicroseconds(1600);//17 
+        pulseIR(600);
+        delayMicroseconds(600);//18 
+        pulseIR(600);
+        delayMicroseconds(600);//19 
+        pulseIR(600);
+        delayMicroseconds(600);//20  
+        pulseIR(600);
+        delayMicroseconds(1800);//21
+        pulseIR(1600);
+        delayMicroseconds(600);//22
+        pulseIR(600);
+        delayMicroseconds(600);//23 
+        pulseIR(600);
+        delayMicroseconds(600); //24
+        pulseIR(600);
+        delayMicroseconds(600);//25
+        pulseIR(600);
+        delayMicroseconds(1600);//26
+        pulseIR(600);
+        delayMicroseconds(1600);//27
+        pulseIR(600);
+        delayMicroseconds(1600);//28
+        pulseIR(600);
+        delayMicroseconds(600);//29
+        pulseIR(600);
+        delayMicroseconds(1600);//30
+        pulseIR(600);
+        delayMicroseconds(1600);//31
+        pulseIR(600);
+        delayMicroseconds(50000);
+        pulseIR(600);
+        delay(200);
+        }  
+  void ch_up(){
+        pulseIR(600);  
+        delayMicroseconds(5000);//0
+        pulseIR(600);
+        delayMicroseconds(600); //1
+        pulseIR(600);
+        delayMicroseconds(1600);//2
+        pulseIR(1600);
+        delayMicroseconds(600); //3
+        pulseIR(600);
+        delayMicroseconds(600); //4
+        pulseIR(600);
+        delayMicroseconds(600);//5
+        pulseIR(600);
+        delayMicroseconds(600);//6
+        pulseIR(600);
+        delayMicroseconds(600);//7
+        pulseIR(600);
+        delayMicroseconds(600); //8
+        pulseIR(600);
+        delayMicroseconds(1600); //9
+        pulseIR(1600);
+        delayMicroseconds(600); //10
+        pulseIR(600);
+        delayMicroseconds(1600); //11
+        pulseIR(600);
+        delayMicroseconds(1600); //12
+        pulseIR(600);
+        delayMicroseconds(1600);//13
+        pulseIR(600);
+        delayMicroseconds(1600);//14
+        pulseIR(600);
+        delayMicroseconds(600);//15 
+        pulseIR(1600);
+        delayMicroseconds(1600);//16
+        pulseIR(600);
+        delayMicroseconds(600);//17 
+        pulseIR(600);
+        delayMicroseconds(1600);//18 
+        pulseIR(600);
+        delayMicroseconds(600);//19 
+        pulseIR(600);
+        delayMicroseconds(600);//20  
+        pulseIR(600);
+        delayMicroseconds(1800);//21
+        pulseIR(1600);
+        delayMicroseconds(600);//22
+        pulseIR(600);
+        delayMicroseconds(600);//23
+        pulseIR(600);
+        delayMicroseconds(600); //24
+        pulseIR(600);
+        delayMicroseconds(1600);//25
+        pulseIR(600);
+        delayMicroseconds(600);//26
+        pulseIR(600);
+        delayMicroseconds(1600);//27
+        pulseIR(600);
+        delayMicroseconds(1600);//28
+        pulseIR(600);
+        delayMicroseconds(600);//29
+        pulseIR(600);
+        delayMicroseconds(1600);//30
+        pulseIR(600);
+        delayMicroseconds(1600);//31
+        pulseIR(600);
+        delayMicroseconds(50000);
+        pulseIR(600);
+        delay(200);
+        }
+ void ch_down(){
+        pulseIR(600);  
+        delayMicroseconds(5000);//0
+        pulseIR(600);
+        delayMicroseconds(600); //1
+        pulseIR(600);
+        delayMicroseconds(1600);//2
+        pulseIR(1600);
+        delayMicroseconds(600); //3
+        pulseIR(600);
+        delayMicroseconds(600); //4
+        pulseIR(600);
+        delayMicroseconds(600);//5
+        pulseIR(600);
+        delayMicroseconds(600);//6
+        pulseIR(600);
+        delayMicroseconds(600);//7
+        pulseIR(600);
+        delayMicroseconds(600); //8
+        pulseIR(600);
+        delayMicroseconds(1600); //9
+        pulseIR(1600);
+        delayMicroseconds(600); //10
+        pulseIR(600);
+        delayMicroseconds(1600); //11
+        pulseIR(600);
+        delayMicroseconds(1600); //12
+        pulseIR(600);
+        delayMicroseconds(1600);//13
+        pulseIR(600);
+        delayMicroseconds(1600);//14
+        pulseIR(600);
+        delayMicroseconds(600);//15 
+        pulseIR(1600);
+        delayMicroseconds(1600);//16
+        pulseIR(600);
+        delayMicroseconds(1600);//17 
+        pulseIR(600);
+        delayMicroseconds(1600);//18 
+        pulseIR(600);
+        delayMicroseconds(600);//19 
+        pulseIR(600);
+        delayMicroseconds(600);//20  
+        pulseIR(600);
+        delayMicroseconds(1800);//21
+        pulseIR(1600);
+        delayMicroseconds(600);//22
+        pulseIR(600);
+        delayMicroseconds(600);//23
+        pulseIR(600);
+        delayMicroseconds(600); //24
+        pulseIR(600);
+        delayMicroseconds(600);//25
+        pulseIR(600);
+        delayMicroseconds(600);//26
+        pulseIR(600);
+        delayMicroseconds(1600);//27
+        pulseIR(600);
+        delayMicroseconds(1600);//28
+        pulseIR(600);
+        delayMicroseconds(600);//29
+        pulseIR(600);
+        delayMicroseconds(1600);//30
+        pulseIR(600);
+        delayMicroseconds(1600);//31
+        pulseIR(600);
+        delayMicroseconds(50000);
+        pulseIR(600);
+        delay(200);
+
+        }
+  void power(){
+        pulseIR(600);  
+        delayMicroseconds(5000);//0
+        pulseIR(600);
+        delayMicroseconds(600); //1
+        pulseIR(600);
+        delayMicroseconds(1600);//2
+        pulseIR(1600);
+        delayMicroseconds(600); //3
+        pulseIR(600);
+        delayMicroseconds(600); //4
+        pulseIR(600);
+        delayMicroseconds(600);//5
+        pulseIR(600);
+        delayMicroseconds(600);//6
+        pulseIR(600);
+        delayMicroseconds(600);//7
+        pulseIR(600);
+        delayMicroseconds(600); //8
+        pulseIR(600);
+        delayMicroseconds(1600); //9
+        pulseIR(1600);
+        delayMicroseconds(600); //10
+        pulseIR(600);
+        delayMicroseconds(1600); //11
+        pulseIR(600);
+        delayMicroseconds(1600); //12
+        pulseIR(600);
+        delayMicroseconds(1600);//13
+        pulseIR(600);
+        delayMicroseconds(1600);//14
+        pulseIR(600);
+        delayMicroseconds(600);//15 
+        pulseIR(1600);
+        delayMicroseconds(1600);//16
+        pulseIR(600);
+        delayMicroseconds(600);//17 
+        pulseIR(600);
+        delayMicroseconds(600);//18 
+        pulseIR(600);
+        delayMicroseconds(1600);//19 
+        pulseIR(600);
+        delayMicroseconds(600);//20  
+        pulseIR(600);
+        delayMicroseconds(1800);//21
+        pulseIR(1600);
+        delayMicroseconds(600);//22
+        pulseIR(600);
+        delayMicroseconds(600);//23
+        pulseIR(600);
+        delayMicroseconds(600); //24
+        pulseIR(600);
+        delayMicroseconds(1600);//25
+        pulseIR(600);
+        delayMicroseconds(1600);//26
+        pulseIR(600);
+        delayMicroseconds(600);//27
+        pulseIR(600);
+        delayMicroseconds(1600);//28
+        pulseIR(600);
+        delayMicroseconds(600);//29
+        pulseIR(600);
+        delayMicroseconds(1600);//30
+        pulseIR(600);
+        delayMicroseconds(1600);//31
+        pulseIR(600);
+        delayMicroseconds(50000);
+        pulseIR(600);
+        delay(200);
+
+        }
+  void mute(){
+        pulseIR(600);  
+        delayMicroseconds(5000);//0
+        pulseIR(600);
+        delayMicroseconds(600); //1
+        pulseIR(600);
+        delayMicroseconds(1600);//2
+        pulseIR(1600);
+        delayMicroseconds(600); //3
+        pulseIR(600);
+        delayMicroseconds(600); //4
+        pulseIR(600);
+        delayMicroseconds(600);//5
+        pulseIR(600);
+        delayMicroseconds(600);//6
+        pulseIR(600);
+        delayMicroseconds(600);//7
+        pulseIR(600);
+        delayMicroseconds(600); //8
+        pulseIR(600);
+        delayMicroseconds(1600); //9
+        pulseIR(1600);
+        delayMicroseconds(600); //10
+        pulseIR(600);
+        delayMicroseconds(1600); //11
+        pulseIR(600);
+        delayMicroseconds(1600); //12
+        pulseIR(600);
+        delayMicroseconds(1600);//13
+        pulseIR(600);
+        delayMicroseconds(1600);//14
+        pulseIR(600);
+        delayMicroseconds(600);//15 
+        pulseIR(1600);
+        delayMicroseconds(1600);//16
+        pulseIR(600);
+        delayMicroseconds(600);//17 
+        pulseIR(600);
+        delayMicroseconds(600);//18 
+        pulseIR(600);
+        delayMicroseconds(1600);//19 
+        pulseIR(600);
+        delayMicroseconds(1600);//20  
+        pulseIR(600);
+        delayMicroseconds(600);//21
+        pulseIR(1600);
+        delayMicroseconds(600);//22
+        pulseIR(600);
+        delayMicroseconds(600);//23
+        pulseIR(600);
+        delayMicroseconds(600); //24
+        pulseIR(600);
+        delayMicroseconds(1600);//25
+        pulseIR(600);
+        delayMicroseconds(1600);//26
+        pulseIR(600);
+        delayMicroseconds(600);//27
+        pulseIR(600);
+        delayMicroseconds(600);//28
+        pulseIR(600);
+        delayMicroseconds(1600);//29
+        pulseIR(600);
+        delayMicroseconds(1600);//30
+        pulseIR(600);
+        delayMicroseconds(1600);//31
+        pulseIR(600);
+        delayMicroseconds(50000);
+        pulseIR(600);
+        }
+
+        
+        
+        
